@@ -1,9 +1,11 @@
-song1 = "";
-song2 = "";
-rightWristX = 0;
-leftWristX = 0;
-rightWristY = 0;
-leftWristY = 0;
+var song1 = "";
+var song2 = "";
+var rightWristX = 0;
+var leftWristX = 0;
+var rightWristY = 0;
+var leftWristY = 0;
+var leftWristScore = 0;
+var song_status1 = "";
 function preload(){
     song1 = loadSound("music.mp3");
     song2 = loadSound("music2.mp3"); 
@@ -18,6 +20,17 @@ function setup(){
 }
 function draw(){
     image(video,0,0,600,500);
+    fill("#14deca");
+    stroke("#14deca");
+    song_status1 = song1.isPlaying();
+    if(leftWristScore > 0.2){
+        circle(leftWristX, leftWristY, 20);
+        song2.stop();
+        if(song_status1 == false){
+            song1.play();
+            document.getElementById("song").innerHTML = "Current Song: Song 1 (left wrist)";
+        }
+    }
 }
 function modelLoaded(){
     console.log("PoseNet Loaded!");
@@ -28,5 +41,9 @@ function gotPoses(results){
         leftWristX = results[0].pose.leftWrist.x;
         rightWristY = results[0].pose.rightWrist.y;
         leftWristY = results[0].pose.leftWrist.y;
+        leftWristScore = results[0].pose.keypoints[9].score;
+        console.log("left wrist x and y: " + leftWristX + ", "+ leftWristY);
+        console.log("right wrist x and y: "+ rightWristX +  ", " + rightWristY);
+        console.log("left wrist score: " + leftWristScore );
     }
 }

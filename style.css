@@ -18,3 +18,10 @@ canvas{
 #play{
     font-size: 20px;
 }
+#song{
+    background-color: tomato;
+    color: white;
+    width: 15%;
+    border-radius: 10px;
+    line-height: 2;
+}
